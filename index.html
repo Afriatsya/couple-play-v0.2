@@ -1,0 +1,3508 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couple Play - Play, Connect, Grow Together</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                colors: {
+                    roseSoft: '#F8DCEB',
+                    lavender: '#E9DDFB',
+                    purpleLove: '#7952A5',
+                    pinkLove: '#DC72A8',
+                    darkLove: '#392453'
+                },
+                fontFamily: {
+                    sans: ['Nunito', 'sans-serif']
+                }
+            }
+        }
+    }
+</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #F9F3FB;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .app-bg {
+            background: linear-gradient(145deg, #FFF8FC, #F5EAFE);
+        }
+
+        .hero-bg {
+            background: linear-gradient(120deg, #B99AD8, #E5A4C8, #F5C7DC);
+        }
+
+        .glass {
+            background: rgba(255,255,255,.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .game-card {
+            transition: all .25s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(130, 83, 160, .13);
+        }
+
+        .game-card:active {
+            transform: scale(.97);
+        }
+
+        .nav-item.active {
+            color: #DC72A8;
+        }
+
+        .nav-item.active .nav-icon {
+            background: #FCE5F1;
+            color: #DC72A8;
+        }
+
+        .modal {
+            display: none;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        /* =================================
+   COUPLE PLAY - DARK MODE
+================================= */
+
+html.dark body {
+    background: #100D18;
+    color: #F8F2FC;
+}
+
+html.dark .app-bg {
+    background: linear-gradient(145deg, #100D18, #191323);
+}
+
+html.dark .glass {
+    background: rgba(35, 27, 47, 0.88);
+    border-color: rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+}
+
+/* Warna teks */
+html.dark .text-darkLove,
+html.dark .text-gray-700,
+html.dark .text-gray-600 {
+    color: #F3EAF8;
+}
+
+html.dark .text-gray-500,
+html.dark .text-gray-400 {
+    color: #B8AABD;
+}
+
+/* Background konten */
+html.dark .bg-white,
+html.dark .bg-pink-50,
+html.dark .bg-purple-50 {
+    background: #241C30;
+}
+
+html.dark .bg-pink-100,
+html.dark .bg-purple-100 {
+    background: #30243E;
+}
+
+/* Border */
+html.dark .border-white,
+html.dark .border-pink-100,
+html.dark .border-purple-100 {
+    border-color: #40324F;
+}
+
+/* Modal permainan */
+html.dark #gameModal > div {
+    background: #1D1828;
+    color: #F8F2FC;
+}
+
+/* Bottom navigation */
+html.dark .nav-icon {
+    background: #30243E;
+}
+
+html.dark .nav-item {
+    color: #B8AABD;
+}
+
+html.dark .nav-item.active {
+    color: #E99AC4;
+}
+
+html.dark .nav-item.active .nav-icon {
+    background: #49304D;
+    color: #E99AC4;
+}
+
+
+/* =================================
+   PERBAIKAN GAME CARD DARK MODE
+================================= */
+
+html.dark .game-card {
+    background: linear-gradient(
+        145deg,
+        #241C30,
+        #30243E
+    ) !important;
+
+    border-color: #493653 !important;
+    color: #F8F2FC !important;
+}
+
+/* Judul permainan */
+html.dark .game-card h3 {
+    color: #F8F2FC !important;
+}
+
+/* Deskripsi permainan */
+html.dark .game-card p {
+    color: #C9BBD2 !important;
+}
+
+/* Tombol main sekarang */
+html.dark .game-card > div:last-child {
+    color: #FFFFFF !important;
+}
+
+
+/* =================================
+   DARK MODE - LOVE REMINDER
+================================= */
+
+html.dark .love-reminder {
+    background: linear-gradient(
+        120deg,
+        #30243E,
+        #3B263D
+    ) !important;
+}
+
+html.dark .love-reminder h3 {
+    color: #F8F2FC !important;
+}
+
+html.dark .love-reminder p {
+    color: #D2C3DB !important;
+}
+
+html.dark .love-reminder p:last-child {
+    color: #E99AC4 !important;
+}
+
+
+/* HEADER BACKGROUND IMAGE */
+
+.hero-bg {
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+
+
+/* LDR BANNER */
+.ldr-banner {
+    background: linear-gradient(135deg, #fce7f3, #ede9fe, #fbcfe8);
+    color: #7e3675;
+    border: 1px solid rgba(255,255,255,0.7);
+}
+
+/* ANIMASI KARAKTER */
+.ldr-float {
+    display: inline-block;
+    animation: ldrFloat 2.5s ease-in-out infinite;
+}
+
+.ldr-delay {
+    animation-delay: 0.8s;
+}
+
+@keyframes ldrFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-9px);
+    }
+}
+
+/* ANIMASI HATI */
+.ldr-heart {
+    display: inline-block;
+    animation: ldrHeartbeat 1.2s ease-in-out infinite;
+}
+
+@keyframes ldrHeartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+}
+
+/* KOTAK DIALOG */
+.ldr-dialog {
+    background: rgba(255,255,255,0.85);
+    min-height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* DARK MODE */
+html.dark .ldr-banner {
+    background: linear-gradient(135deg, #39243c, #30284c, #49263f);
+    color: #fce7f3;
+    border-color: rgba(255,255,255,0.1);
+}
+
+html.dark .ldr-dialog {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+}
+
+
+/* LDR GREETING */
+.ldr-character-wrapper {
+    width: 180px;
+    height: 195px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ldr-character {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    animation: ldrCharacterFloat 2.5s ease-in-out infinite;
+}
+
+.ldr-greeting {
+    gap: 5px;
+    padding: 8px 0;
+}
+
+/* DIALOG */
+.ldr-speech {
+    flex: 1;
+    background: linear-gradient(135deg, #fce7f3, #ede9fe);
+    color: #873b91;
+    padding: 14px 12px;
+    border-radius: 18px;
+    position: relative;
+    font-size: 14px;
+}
+
+.ldr-speech::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 30px;
+    width: 14px;
+    height: 14px;
+    background: #fce7f3;
+    transform: rotate(45deg);
+}
+
+@keyframes ldrCharacterFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+html.dark .ldr-speech {
+    background: linear-gradient(135deg, #39243c, #30284c);
+    color: #fce7f3;
+}
+
+html.dark .ldr-speech::before {
+    background: #39243c;
+}
+
+
+
+
+
+    </style>
+</head>
+
+<body class="min-h-screen text-darkLove">
+
+    <!-- APP CONTAINER -->
+    <main class="max-w-md mx-auto min-h-screen app-bg relative shadow-2xl overflow-hidden pb-28">
+
+        <!-- HEADER -->
+        <header class="hero-bg rounded-b-[40px] px-6 pt-8 pb-20 relative overflow-hidden">
+
+            <div class="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-white/20 blur-2xl"></div>
+            <div class="absolute -left-10 bottom-0 w-40 h-40 rounded-full bg-pink-200/30 blur-2xl"></div>
+
+            <div class="relative flex justify-between items-center">
+
+                
+<div class="flex items-center gap-3">
+
+    <div class="w-12 h-12 rounded-2xl bg-white/30 backdrop-blur-md flex items-center justify-center overflow-hidden">
+        <img
+            src="assets/images/a_clean_polished_pastel_3d_soft_gloss_app_icon_s.png"
+            alt="Couple Play Logo"
+            class="w-full h-full object-contain p-1"
+        >
+    </div>
+
+    <div>
+        <h1 class="text-white text-2xl font-black tracking-tight">
+            Couple Play
+        </h1>
+        <p class="text-white/80 text-xs">
+            Play · Connect · Grow Together
+        </p>
+    </div>
+
+</div>
+
+
+                <div class="flex gap-2">
+
+    <!-- DARK MODE BUTTON -->
+    <button onclick="toggleTheme()" id="themeButton"
+        class="w-10 h-10 rounded-full bg-white/25 text-white text-lg">
+        ☀️
+    </button>
+
+    <button onclick="document.getElementById('headerImageInput').click()"
+    class="w-10 h-10 rounded-full bg-white/25 text-white"
+    title="Ganti Background">
+    🖼️
+</button>
+
+    <button onclick="toggleMusic()" id="musicButton"
+        class="w-10 h-10 rounded-full bg-white/25 text-white">
+        ♪
+    </button>
+
+    <button onclick="showSettings()"
+        class="w-10 h-10 rounded-full bg-white/25 text-white">
+        ⚙
+    </button>
+
+</div>
+            </div>
+
+            <div class="absolute right-9 bottom-5 text-6xl opacity-90 floating">
+                🫶
+            </div>
+
+            <div class="absolute left-8 bottom-8 text-white/70 text-xl">♡</div>
+            <div class="absolute right-32 top-24 text-white/70">✦</div>
+
+            <input
+    type="file"
+    id="headerImageInput"
+    accept="image/*"
+    class="hidden"
+    onchange="handleHeaderImage(event)"
+>
+
+        </header>
+
+
+        <!-- GREETING CARD -->
+        <section class="px-5 -mt-12 relative z-10">
+
+            <div class="glass rounded-[28px] p-5 shadow-lg border border-white">
+
+                <div class="flex justify-between items-start">
+
+                    <div>
+                        <p class="text-pinkLove text-sm font-bold">A little happiness for you</p>
+
+                        <h2 class="text-2xl font-black mt-1">
+                            Selamat Datang! ✨
+                        </h2>
+
+                        <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+                            Tempat sederhana untuk berbagi cerita, mencoba hal baru, dan menciptakan momen menyenangkan
+                        </p>
+                    </div>
+
+                    <div class="text-4xl floating">💌</div>
+                </div>
+
+                <div class="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-100 text-purpleLove text-sm font-bold">
+                    EXPLORE COUPLE PLAY
+                    
+                    <span>›</span>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- STATISTICS -->
+        <section class="px-5 mt-5">
+
+            <div class="grid grid-cols-2 gap-3">
+
+                <div class="glass rounded-2xl p-4 text-center shadow-sm">
+                    <div class="text-2xl">💗</div>
+                    <p class="text-gray-500 text-xs mt-1">Skor Kecocokan</p>
+                    <h3 class="text-xl font-black text-purpleLove">92%</h3>
+                </div>
+
+                <div class="glass rounded-2xl p-4 text-center shadow-sm">
+                    <div class="text-2xl">⭐</div>
+                    <p class="text-gray-500 text-xs mt-1">Total Poin</p>
+                    <h3 class="text-xl font-black text-purpleLove" id="totalPoints">3.250</h3>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- GAME SECTION -->
+        
+<!-- GAME SECTION -->
+<section class="px-5 mt-7" id="games">
+
+    <div class="flex items-center justify-between mb-4">
+
+        <div>
+            <h2 class="text-xl font-black">🎮 Game Favorit</h2>
+            <p class="text-xs text-gray-400">Let's play together!</p>
+        </div>
+
+        <button onclick="showAllGames()"
+            class="text-pinkLove text-sm font-bold">
+            Lihat Semua ›
+        </button>
+
+    </div>
+
+
+    <!-- GAME GRID UTAMA -->
+    <div class="grid grid-cols-2 gap-3">
+
+        <!-- LOVE QUIZ -->
+        <button onclick="openGame('Love Quiz')"
+            class="game-card text-left bg-gradient-to-br from-pink-100 to-pink-200 rounded-3xl p-4 border border-pink-200">
+
+            <div class="h-24 flex items-center justify-center text-6xl floating">
+                💝
+            </div>
+
+            <h3 class="font-black text-lg">Love Quiz</h3>
+
+            <p class="text-xs text-gray-600 mt-1">
+                Seberapa kenal kamu tentang pasanganmu?
+            </p>
+
+            <div class="mt-4 bg-pinkLove text-white rounded-full text-center py-2 text-xs font-bold">
+                Main Sekarang →
+            </div>
+        </button>
+
+
+        <!-- TRUTH OR DARE -->
+        <button onclick="openGame('Truth or Dare')"
+            class="game-card text-left bg-gradient-to-br from-purple-100 to-purple-200 rounded-3xl p-4 border border-purple-200">
+
+            <div class="h-24 flex items-center justify-center text-6xl floating">
+                💬
+            </div>
+
+            <h3 class="font-black text-lg">Truth or Dare</h3>
+
+            <p class="text-xs text-gray-600 mt-1">
+                Jujur, berani, atau keduanya?
+            </p>
+
+            <div class="mt-4 bg-purpleLove text-white rounded-full text-center py-2 text-xs font-bold">
+                Main Sekarang →
+            </div>
+        </button>
+
+
+        <!-- THIS OR THAT -->
+        <button onclick="openGame('This or That')"
+            class="game-card text-left bg-gradient-to-br from-pink-100 to-rose-200 rounded-3xl p-4 border border-pink-200">
+
+            <div class="h-24 flex items-center justify-center text-6xl floating">
+                🃏
+            </div>
+
+            <h3 class="font-black text-lg">This or That</h3>
+
+            <p class="text-xs text-gray-600 mt-1">
+                Pilih salah satu yang kamu suka!
+            </p>
+
+            <div class="mt-4 bg-pinkLove text-white rounded-full text-center py-2 text-xs font-bold">
+                Main Sekarang →
+            </div>
+        </button>
+
+
+        <!-- LOVE CALCULATOR -->
+        <button onclick="openGame('Love Calculator')"
+            class="game-card text-left bg-gradient-to-br from-purple-100 to-indigo-100 rounded-3xl p-4 border border-purple-200">
+
+            <div class="h-24 flex items-center justify-center text-6xl floating">
+                💟
+            </div>
+
+            <h3 class="font-black text-lg">Love Calculator</h3>
+
+            <p class="text-xs text-gray-600 mt-1">
+                Hitung seberapa cocok kita bersama!
+            </p>
+
+            <div class="mt-4 bg-purpleLove text-white rounded-full text-center py-2 text-xs font-bold">
+                Main Sekarang →
+            </div>
+        </button>
+
+
+        <!-- RANDOM LOVE -->
+        <button onclick="openGame('Random Love')"
+            class="game-card text-left bg-gradient-to-br from-pink-100 to-rose-200 rounded-3xl p-4 border border-pink-200">
+
+            <div class="h-24 flex items-center justify-center text-6xl floating">
+                🎁
+            </div>
+
+            <h3 class="font-black text-lg">Random Love</h3>
+
+            <p class="text-xs text-gray-600 mt-1">
+                Pesan cinta spesial untukmu hari ini.
+            </p>
+
+            <div class="mt-4 bg-pinkLove text-white rounded-full text-center py-2 text-xs font-bold">
+                Main Sekarang →
+            </div>
+        </button>
+
+
+        <!-- DARE CHALLENGE -->
+        <button onclick="openGame('Dare Challenge')"
+            class="game-card text-left bg-gradient-to-br from-purple-100 to-purple-200 rounded-3xl p-4 border border-purple-200">
+
+            <div class="h-24 flex items-center justify-center text-6xl floating">
+                🏆
+            </div>
+
+            <h3 class="font-black text-lg">Dare Challenge</h3>
+
+            <p class="text-xs text-gray-600 mt-1">
+                Tantangan seru untuk pasangan hebat!
+            </p>
+
+            <div class="mt-4 bg-purpleLove text-white rounded-full text-center py-2 text-xs font-bold">
+                Main Sekarang →
+            </div>
+        </button>
+
+    </div>
+    <!-- END GAME GRID UTAMA -->
+
+
+    <!-- LDR GREETING -->
+<!-- LDR GREETING -->
+<div class="ldr-greeting flex items-center gap-3 mb-4">
+
+    <!-- KARAKTER DI KIRI -->
+    <div class="ldr-character-wrapper flex-shrink-0">
+        <img
+            src="assets/images/Game Seru untuk Pasangan LDR.png"
+            alt="Karakter Couple Play"
+            class="ldr-character"
+        >
+    </div>
+
+    <!-- DIALOG DI KANAN -->
+    <div class="ldr-speech">
+        <p class="font-bold text-sm leading-relaxed">
+            Haii! 👋 Kami ada game yang khusus untuk orang LDR loh! 💗
+        </p>
+    </div>
+
+</div>
+<!-- END LDR GREETING -->
+<!-- END LDR GREETING -->
+
+
+    <!-- GAME GRID KHUSUS LDR -->
+    <div class="grid grid-cols-2 gap-3">
+
+        <!-- SAME TIME, SAME CHOICE -->
+        <button onclick="openGame('Same Time, Same Choice')"
+            class="game-card text-left bg-gradient-to-br from-pink-100 to-purple-100 rounded-3xl p-4 border border-pink-200">
+
+            <div class="h-24 flex items-center justify-center text-6xl floating">
+                💞
+            </div>
+
+            <h3 class="font-black text-lg">Same Time, Same Choice</h3>
+
+            <p class="text-xs text-gray-600 mt-1">
+                Apakah pilihan kita selalu sama?
+            </p>
+
+            <div class="mt-4 bg-pink-400 text-white rounded-full text-center py-2 text-xs font-bold">
+                Main Sekarang →
+            </div>
+
+        </button>
+
+
+        <!-- MYSTERY CONNECTION -->
+        <button onclick="openGame('Mystery Connection')"
+            class="game-card text-left bg-gradient-to-br from-purple-100 to-indigo-100 rounded-3xl p-4 border border-purple-200">
+
+            <div class="h-24 flex items-center justify-center text-6xl floating">
+                💌
+            </div>
+
+            <h3 class="font-black text-lg">Mystery Connection</h3>
+
+            <p class="text-xs text-gray-600 mt-1">
+                Buka amplop dan pecahkan misterinya!
+            </p>
+
+            <div class="mt-4 bg-purpleLove text-white rounded-full text-center py-2 text-xs font-bold">
+                Main Sekarang →
+            </div>
+
+        </button>
+
+    </div>
+    <!-- END GAME GRID KHUSUS LDR -->
+
+
+</section>
+<!-- END GAME SECTION -->
+
+
+
+        <!-- DAILY CHALLENGE -->
+        <section class="px-5 mt-7" id="challenge">
+
+            <div class="glass rounded-3xl p-5 border border-white shadow-sm">
+
+                <div class="flex justify-between items-center">
+
+                    <div>
+                        <h2 class="font-black text-lg">💌 Challenge Hari Ini</h2>
+                        <p class="text-xs text-gray-500 mt-1">
+                            Jangan lewatkan tantangan spesial!
+                        </p>
+                    </div>
+
+                    <span class="bg-purpleLove text-white text-xs px-4 py-2 rounded-full">
+                        Daily
+                    </span>
+                </div>
+
+                <div class="mt-4 bg-pink-50 rounded-2xl p-4 flex items-center gap-3">
+
+                    <div class="text-4xl">💗</div>
+
+                    <div class="flex-1">
+                        <p class="font-bold text-sm" id="challengeText">
+                            Kirim pesan manis ke pasanganmu tanpa alasan.
+                        </p>
+                        <p class="text-pinkLove text-xs font-bold mt-2">
+                            +50 Poin
+                        </p>
+                    </div>
+
+                    <button onclick="completeChallenge()" id="challengeButton"
+                        class="bg-pinkLove text-white px-4 py-2 rounded-full text-xs font-bold">
+                        Selesai
+                    </button>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- LOVE MESSAGE -->
+        <section class="px-5 mt-5 mb-6">
+
+            <div class="love-reminder rounded-3xl p-5 bg-gradient-to-r from-purple-200 to-pink-200 text-center">
+
+                <div class="text-3xl mb-2">🌷</div>
+
+                <h3 class="font-black text-lg">A Little Reminder</h3>
+
+                <p class="text-sm text-gray-600 mt-2 italic">
+                    "Hal sederhana menjadi istimewa
+                    ketika dilakukan bersama orang yang tepat."
+                </p>
+
+                <p class="text-pinkLove font-bold text-xs mt-3">
+                    Made with love ♡
+                </p>
+            </div>
+        </section>
+
+
+        <!-- BOTTOM NAVIGATION -->
+        <nav class="fixed bottom-0 left-0 right-0 z-40 max-w-md mx-auto">
+
+            <div class="glass border-t border-white/70 rounded-t-[28px] px-2 pt-3 pb-5 shadow-[0_-5px_25px_rgba(100,60,130,0.08)]">
+
+                <div class="grid grid-cols-5">
+
+                    <button onclick="navigate(this, 'Home')"
+                        class="nav-item active flex flex-col items-center gap-1 text-gray-400">
+
+                        <div class="nav-icon w-10 h-8 rounded-full flex items-center justify-center text-xl">
+                            ⌂
+                        </div>
+                        <span class="text-[11px] font-bold">Home</span>
+                    </button>
+
+                    <button onclick="navigate(this, 'Games')"
+                        class="nav-item flex flex-col items-center gap-1 text-gray-400">
+
+                        <div class="nav-icon w-10 h-8 rounded-full flex items-center justify-center text-xl">
+                            🎮
+                        </div>
+                        <span class="text-[11px] font-bold">Games</span>
+                    </button>
+
+                    <button onclick="navigate(this, 'Challenge')"
+                        class="nav-item flex flex-col items-center gap-1 text-gray-400">
+
+                        <div class="nav-icon w-10 h-8 rounded-full flex items-center justify-center text-xl">
+                            ♡
+                        </div>
+                        <span class="text-[11px] font-bold">Challenge</span>
+                    </button>
+
+                    <button onclick="navigate(this, 'Memories')"
+                        class="nav-item flex flex-col items-center gap-1 text-gray-400">
+
+                        <div class="nav-icon w-10 h-8 rounded-full flex items-center justify-center text-xl">
+                            ▧
+                        </div>
+                        <span class="text-[11px] font-bold">Memories</span>
+                    </button>
+
+                    <button onclick="navigate(this, 'Profile')"
+                        class="nav-item flex flex-col items-center gap-1 text-gray-400">
+
+                        <div class="nav-icon w-10 h-8 rounded-full flex items-center justify-center text-xl">
+                            ♙
+                        </div>
+                        <span class="text-[11px] font-bold">Profile</span>
+                    </button>
+
+                </div>
+            </div>
+        </nav>
+
+    </main>
+
+
+    <!-- GAME MODAL -->
+    
+<!-- LOVE QUIZ MODAL -->
+<div id="gameModal"
+    class="modal fixed inset-0 z-50 items-center justify-center bg-purple-950/50 backdrop-blur-md p-4">
+
+    <div class="bg-white rounded-[30px] p-6 w-full max-w-sm shadow-2xl relative max-h-[90vh] overflow-y-auto">
+
+        <button onclick="closeModal()"
+            class="absolute right-5 top-4 text-gray-400 text-xl z-10">
+            ✕
+        </button>
+
+        <div id="gameContent" class="pt-3">
+            <!-- Konten permainan dibuat oleh JavaScript -->
+        </div>
+
+    </div>
+</div>
+
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        let points = 3250;
+        let selectedGame = '';
+
+        // OPEN GAME
+       
+function openGame(game) {
+
+    selectedGame = game;
+
+    document.getElementById('gameModal').classList.add('show');
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center py-5">
+
+            <div class="text-6xl mb-5">💗</div>
+
+            <h2 class="text-2xl font-black text-darkLove">
+                ${escapeHTML(game)}
+            </h2>
+
+            <p class="text-gray-500 text-sm mt-3">
+                Siap bermain bersama pasanganmu?
+            </p>
+
+            <button onclick="startGame()"
+                class="w-full mt-7 py-4 rounded-full bg-gradient-to-r from-pinkLove to-purpleLove text-white font-black">
+                Mulai Permainan 💕
+            </button>
+
+            <button onclick="closeModal()"
+                class="mt-4 text-gray-400 text-sm font-bold">
+                Kembali
+            </button>
+
+        </div>
+    `;
+}
+
+
+        // CLOSE MODAL
+        function closeModal() {
+            document.getElementById('gameModal').classList.remove('show');
+        }
+
+        // START GAME
+        
+// =====================================
+// LOVE QUIZ GAME
+// =====================================
+
+const loveQuestions = [
+    {
+        question: "Apa makanan favorit pasanganmu?",
+        options: ["Mie Ayam", "Bakso", "Nasi Goreng", "Sate"]
+    },
+    {
+        question: "Mana yang paling disukai pasanganmu?",
+        options: ["Pantai", "Gunung", "Kafe", "Di rumah"]
+    },
+    {
+        question: "Apa warna favorit pasanganmu?",
+        options: ["Hitam", "Putih", "Pink", "Biru"]
+    },
+    {
+        question: "Apa yang paling membuat pasanganmu bahagia?",
+        options: ["Hadiah", "Perhatian", "Waktu bersama", "Kejutan"]
+    },
+    {
+        question: "Apa yang paling ditakuti pasanganmu?",
+        options: ["Kehilangan", "Ketinggian", "Kesepian", "Serangga"]
+    },
+    {
+        question: "Pilih kegiatan favorit pasanganmu!",
+        options: ["Menonton film", "Jalan-jalan", "Tidur", "Kulineran"]
+    },
+    {
+        question: "Apa minuman favorit pasanganmu?",
+        options: ["Kopi", "Matcha", "Jus", "Cokelat"]
+    },
+    {
+        question: "Bagaimana pasanganmu menunjukkan rasa sayang?",
+        options: ["Kata-kata", "Sentuhan", "Hadiah", "Perhatian"]
+    },
+    {
+        question: "Mana yang paling disukai pasanganmu?",
+        options: ["Telepon", "Chatting", "Video call", "Bertemu langsung"]
+    },
+    {
+        question: "Apa yang paling diinginkan pasanganmu?",
+        options: ["Liburan bersama", "Menikah", "Rumah impian", "Bahagia bersama"]
+    }
+];
+
+let quizPlayers = [];
+let quizAnswers = [[], []];
+let currentPlayer = 0;
+let currentQuestion = 0;
+
+
+// Escape input nama agar aman saat ditampilkan
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[char]);
+}
+
+
+// START GAME
+
+function startGame() {
+
+    if (selectedGame === 'Love Quiz') {
+        quizPlayers = [];
+        quizAnswers = [[], []];
+        currentPlayer = 0;
+        currentQuestion = 0;
+
+        showQuizSetup();
+        return;
+    }
+
+    if (selectedGame === 'Truth or Dare') {
+        startTruthDare();
+        return;
+    }
+
+    if (selectedGame === 'Love Calculator') {
+    startLoveCalculator();
+    return;
+}
+
+    
+
+    if (selectedGame === 'Random Love') {
+        const messages = [
+            'Kamu adalah alasan sederhana untuk tersenyum setiap hari. 💗',
+            'Dunia terasa lebih indah sejak ada kamu. 🌷',
+            'Aku tidak butuh sempurna, aku hanya ingin bersama kamu. 💕',
+            'Terima kasih sudah menjadi bagian dari ceritaku. 💌'
+        ];
+
+        closeModal();
+
+        alert(messages[Math.floor(Math.random() * messages.length)]);
+        return;
+    }
+
+    alert('Permainan ' + selectedGame + ' segera hadir! 💕');
+}
+
+
+// SETUP PEMAIN
+function showQuizSetup() {
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-6xl mb-4">💗</div>
+
+            <p class="text-pinkLove font-bold text-sm">
+                COUPLE PLAY EXCLUSIVE
+            </p>
+
+            <h2 class="text-2xl font-black text-darkLove mt-2">
+                Love Quiz
+            </h2>
+
+            <p class="text-gray-500 text-sm mt-2">
+                Seberapa baik kalian saling mengenal?
+            </p>
+
+            <div class="text-left mt-7 space-y-4">
+
+                <div>
+                    <label class="text-sm font-bold text-purpleLove">
+                        Nama Pemain Pertama
+                    </label>
+
+                    <input id="playerOne"
+                        type="text"
+                        maxlength="25"
+                        placeholder="Masukkan nama..."
+                        class="w-full mt-2 p-4 rounded-2xl bg-pink-50 border border-pink-100 outline-none focus:ring-2 focus:ring-pink-300">
+                </div>
+
+                <div>
+                    <label class="text-sm font-bold text-purpleLove">
+                        Nama Pemain Kedua
+                    </label>
+
+                    <input id="playerTwo"
+                        type="text"
+                        maxlength="25"
+                        placeholder="Masukkan nama..."
+                        class="w-full mt-2 p-4 rounded-2xl bg-purple-50 border border-purple-100 outline-none focus:ring-2 focus:ring-purple-300">
+                </div>
+
+            </div>
+
+            <div class="mt-5 p-4 bg-purple-50 rounded-2xl text-xs text-gray-500">
+                ✨ Kalian akan menjawab 10 pertanyaan secara bergantian menggunakan satu perangkat.
+            </div>
+
+            <button onclick="beginQuiz()"
+                class="w-full mt-6 py-4 rounded-full bg-gradient-to-r from-pinkLove to-purpleLove text-white font-black shadow-lg">
+                Mulai Love Quiz 💕
+            </button>
+
+        </div>
+    `;
+}
+
+
+// MULAI QUIZ
+function beginQuiz() {
+
+    const nameOne = document.getElementById('playerOne').value.trim();
+    const nameTwo = document.getElementById('playerTwo').value.trim();
+
+    if (!nameOne || !nameTwo) {
+        alert('Isi nama kedua pemain terlebih dahulu!');
+        return;
+    }
+
+    if (nameOne.toLowerCase() === nameTwo.toLowerCase()) {
+        alert('Gunakan nama yang berbeda untuk kedua pemain!');
+        return;
+    }
+
+    quizPlayers = [nameOne, nameTwo];
+    quizAnswers = [[], []];
+
+    currentPlayer = 0;
+    currentQuestion = 0;
+
+    renderQuizQuestion();
+}
+
+
+// TAMPILKAN PERTANYAAN
+function renderQuizQuestion() {
+
+    const player = escapeHTML(quizPlayers[currentPlayer]);
+    const question = loveQuestions[currentQuestion];
+
+    const progress = ((currentQuestion + 1) / loveQuestions.length) * 100;
+
+    document.getElementById('gameContent').innerHTML = `
+
+        <div class="text-center">
+
+            <div class="flex justify-between items-center mb-5">
+
+                <span class="text-xs font-bold text-pinkLove">
+                    LOVE QUIZ 💗
+                </span>
+
+                <span class="text-xs text-gray-400 font-bold">
+                    ${currentQuestion + 1} / ${loveQuestions.length}
+                </span>
+
+            </div>
+
+            <div class="w-full bg-purple-100 rounded-full h-2 mb-7">
+                <div class="bg-gradient-to-r from-pinkLove to-purpleLove h-2 rounded-full transition-all"
+                    style="width:${progress}%">
+                </div>
+            </div>
+
+            <div class="text-5xl mb-4">💭</div>
+
+            <p class="text-xs text-purpleLove font-bold">
+                SEKARANG GILIRAN
+            </p>
+
+            <h2 class="text-2xl font-black mt-1">
+                ${player}
+            </h2>
+
+            <div class="mt-6 bg-pink-50 rounded-3xl p-5">
+
+                <p class="text-gray-400 text-xs font-bold mb-2">
+                    PERTANYAAN ${currentQuestion + 1}
+                </p>
+
+                <h3 class="text-lg font-black text-darkLove">
+                    ${question.question}
+                </h3>
+
+            </div>
+
+            <div class="space-y-3 mt-5">
+
+                ${question.options.map((option, index) => `
+                    <button onclick="selectQuizAnswer(${index})"
+                        class="w-full text-left p-4 rounded-2xl border border-purple-100 bg-white hover:bg-pink-50 hover:border-pink-300 transition-all font-bold text-sm flex justify-between items-center">
+
+                        ${option}
+
+                        <span class="text-pinkLove">♡</span>
+
+                    </button>
+                `).join('')}
+
+            </div>
+
+            <p class="text-xs text-gray-400 mt-5">
+                Pilih jawaban yang menurutmu benar 💕
+            </p>
+
+        </div>
+    `;
+}
+
+
+// PILIH JAWABAN
+function selectQuizAnswer(index) {
+
+    quizAnswers[currentPlayer].push(index);
+
+    currentQuestion++;
+
+    if (currentQuestion >= loveQuestions.length) {
+
+        if (currentPlayer === 0) {
+
+            // Ganti giliran ke pemain kedua
+            currentPlayer = 1;
+            currentQuestion = 0;
+
+            showPassDevice();
+
+        } else {
+
+            // Semua pemain sudah menjawab
+            showQuizResult();
+
+        }
+
+        return;
+    }
+
+    renderQuizQuestion();
+}
+
+
+// LAYAR PERGANTIAN PEMAIN
+function showPassDevice() {
+
+    document.getElementById('gameContent').innerHTML = `
+
+        <div class="text-center py-6">
+
+            <div class="text-7xl mb-6 floating">💌</div>
+
+            <h2 class="text-2xl font-black text-darkLove">
+                Giliran Berikutnya!
+            </h2>
+
+            <p class="text-gray-500 text-sm mt-3">
+                Semua jawaban ${escapeHTML(quizPlayers[0])}
+                sudah tersimpan.
+            </p>
+
+            <div class="bg-purple-50 rounded-3xl p-5 mt-6">
+
+                <p class="text-xs text-purpleLove font-bold">
+                    SEKARANG GILIRAN
+                </p>
+
+                <h3 class="text-2xl font-black mt-2">
+                    ${escapeHTML(quizPlayers[1])} 💗
+                </h3>
+
+                <p class="text-xs text-gray-500 mt-2">
+                    Berikan perangkat kepada pasanganmu.
+                    Jangan intip jawaban sebelumnya!
+                </p>
+
+            </div>
+
+            <button onclick="renderQuizQuestion()"
+                class="w-full mt-7 py-4 rounded-full bg-gradient-to-r from-purpleLove to-pinkLove text-white font-black">
+                Aku Siap! 💕
+            </button>
+
+        </div>
+    `;
+}
+
+
+// HASIL AKHIR
+function showQuizResult() {
+
+    let correct = 0;
+
+    for (let i = 0; i < loveQuestions.length; i++) {
+
+        if (quizAnswers[0][i] === quizAnswers[1][i]) {
+            correct++;
+        }
+    }
+
+    const percentage = Math.round(
+        (correct / loveQuestions.length) * 100
+    );
+
+    let message = '';
+    let emoji = '';
+
+    if (percentage >= 90) {
+        message = 'Wah! Kalian benar-benar saling memahami!';
+        emoji = '💍';
+    } else if (percentage >= 70) {
+        message = 'Kalian punya ikatan yang sangat manis!';
+        emoji = '💕';
+    } else if (percentage >= 50) {
+        message = 'Masih ada banyak hal menarik untuk dipelajari!';
+        emoji = '🌷';
+    } else {
+        message = 'Saatnya mengenal pasangan lebih dalam lagi!';
+        emoji = '💗';
+    }
+
+    document.getElementById('gameContent').innerHTML = `
+
+        <div class="text-center py-3">
+
+            <div class="text-7xl mb-4 floating">
+                ${emoji}
+            </div>
+
+            <p class="text-pinkLove font-bold text-xs">
+                YOUR LOVE QUIZ RESULT
+            </p>
+
+            <h2 class="text-2xl font-black mt-2">
+                Hasil Kecocokan!
+            </h2>
+
+            <div class="my-7">
+
+                <div class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pinkLove to-purpleLove">
+                    ${percentage}%
+                </div>
+
+                <p class="text-gray-400 text-sm mt-2">
+                    Persentase kesamaan jawaban
+                </p>
+
+            </div>
+
+            <div class="bg-pink-50 rounded-3xl p-5">
+
+                <h3 class="font-black text-lg text-darkLove">
+                    ${correct} dari ${loveQuestions.length} Jawaban Sama
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-3">
+                    ${message}
+                </p>
+
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mt-5">
+
+                <div class="bg-purple-50 rounded-2xl p-3">
+                    <p class="text-xs text-gray-400">Pemain 1</p>
+                    <p class="font-black text-purpleLove">
+                        ${escapeHTML(quizPlayers[0])}
+                    </p>
+                </div>
+
+                <div class="bg-pink-50 rounded-2xl p-3">
+                    <p class="text-xs text-gray-400">Pemain 2</p>
+                    <p class="font-black text-pinkLove">
+                        ${escapeHTML(quizPlayers[1])}
+                    </p>
+                </div>
+
+            </div>
+
+            <button onclick="restartQuiz()"
+                class="w-full mt-6 py-4 rounded-full bg-gradient-to-r from-pinkLove to-purpleLove text-white font-black">
+                Main Lagi 💕
+            </button>
+
+            <button onclick="closeModal()"
+                class="mt-4 text-gray-400 text-sm font-bold">
+                Kembali ke Dashboard
+            </button>
+
+        </div>
+    `;
+}
+
+
+// MAIN LAGI
+function restartQuiz() {
+
+    quizAnswers = [[], []];
+    currentPlayer = 0;
+    currentQuestion = 0;
+
+    renderQuizQuestion();
+}
+
+
+        // DAILY CHALLENGE
+        function completeChallenge() {
+
+            const button = document.getElementById('challengeButton');
+
+            if (button.dataset.done === 'true') return;
+
+            points += 50;
+
+            document.getElementById('totalPoints').innerText =
+                points.toLocaleString('id-ID');
+
+            button.innerText = 'Selesai ✓';
+            button.dataset.done = 'true';
+            button.classList.remove('bg-pinkLove');
+            button.classList.add('bg-green-500');
+
+            alert('Yeay! Kamu mendapatkan 50 poin! 💗');
+        }
+
+        // BOTTOM NAVIGATION
+        function navigate(element, page) {
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            element.classList.add('active');
+
+            const sections = {
+                Home: null,
+                Games: 'games',
+                Challenge: 'challenge',
+                Memories: null,
+                Profile: null
+            };
+
+            if (sections[page]) {
+                document.getElementById(sections[page])
+                    .scrollIntoView({ behavior: 'smooth' });
+            } else if (page !== 'Home') {
+                alert('Halaman ' + page + ' akan segera dibuat! 💕');
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // SHOW ALL GAMES
+        function showAllGames() {
+            document.getElementById('games')
+                .scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // MUSIC BUTTON
+        function toggleMusic() {
+            alert('Fitur musik akan kita tambahkan pada tahap berikutnya 🎵');
+        }
+
+        // SETTINGS
+        function showSettings() {
+            alert('Pengaturan Couple Play ⚙️');
+        }
+
+
+
+function startGame() {
+
+    if (selectedGame === 'Love Quiz') {
+        quizPlayers = [];
+        quizAnswers = [[], []];
+        currentPlayer = 0;
+        currentQuestion = 0;
+
+        showQuizSetup();
+        return;
+    }
+
+    if (selectedGame === 'Truth or Dare') {
+        startTruthDare();
+        return;
+    }
+
+    if (selectedGame === 'This or That') {
+    startThisOrThat();
+    return;
+}
+
+if (selectedGame === 'Love Calculator') {
+    startLoveCalculator();
+    return;
+}
+
+if (selectedGame === 'Random Love') {
+    startRandomLove();
+    return;
+}
+
+if (selectedGame === 'Dare Challenge') {
+    startDareChallenge();
+    return;
+}
+
+
+if (selectedGame === 'Same Time, Same Choice') {
+    startSameTimeSameChoice();
+    return;
+}
+
+if (selectedGame === 'Mystery Connection') {
+    startMysteryConnection();
+    return;
+}
+
+
+    if (selectedGame === 'Random Love') {
+        const messages = [
+            'Kamu adalah alasan sederhana untuk tersenyum setiap hari. 💗',
+            'Dunia terasa lebih indah sejak ada kamu. 🌷',
+            'Aku tidak butuh sempurna, aku hanya ingin bersama kamu. 💕',
+            'Terima kasih sudah menjadi bagian dari ceritaku. 💌'
+        ];
+
+        closeModal();
+
+        alert(messages[Math.floor(Math.random() * messages.length)]);
+        return;
+    }
+
+    showComingSoon(selectedGame);
+}
+
+
+// DATA TRUTH OR DARE
+const truthDareData = {
+    romantis: {
+        truth: [
+            "Apa hal pertama yang membuatmu tertarik kepadaku?",
+            "Apa kenangan kita yang paling kamu sukai?",
+            "Kapan terakhir kali kamu merasa sangat dicintai olehku?",
+            "Apa hal kecil dariku yang selalu membuatmu tersenyum?",
+            "Jika bisa mengulang satu momen bersama, momen apa itu?"
+        ],
+        dare: [
+            "Berikan pujian paling romantis untuk pasanganmu.",
+            "Tatap mata pasangan selama 20 detik.",
+            "Ucapkan 3 alasan mengapa kamu mencintainya.",
+            "Berikan pelukan selama 15 detik jika sama-sama nyaman.",
+            "Nyanyikan lagu romantis untuk pasanganmu."
+        ]
+    },
+
+    lucu: {
+        truth: [
+            "Apa kebiasaan paling aneh yang pernah kamu lakukan?",
+            "Pernahkah kamu salah kirim pesan kepadaku?",
+            "Apa hal paling memalukan yang pernah kamu lakukan di depanku?",
+            "Jika menjadi hewan sehari, kamu ingin menjadi apa?",
+            "Siapa di antara kita yang paling banyak tingkah?"
+        ],
+        dare: [
+            "Tirukan gaya bicara pasangan selama 30 detik.",
+            "Buat ekspresi wajah paling lucu.",
+            "Nyanyikan lagu anak-anak dengan gaya penyanyi terkenal.",
+            "Bicara dengan suara bayi selama satu menit.",
+            "Lakukan joget bebas selama 15 detik."
+        ]
+    },
+
+    mendalam: {
+        truth: [
+            "Apa ketakutan terbesarmu dalam hubungan ini?",
+            "Apa yang paling kamu harapkan dari masa depan kita?",
+            "Pernahkah kamu merasa tidak dimengerti olehku?",
+            "Apa hal yang belum pernah kamu ceritakan kepadaku?",
+            "Apa arti hubungan ini dalam hidupmu?"
+        ],
+        dare: [
+            "Ceritakan satu hal yang paling kamu syukuri dariku.",
+            "Sampaikan satu harapan untuk hubungan kita.",
+            "Ungkapkan perasaanmu tanpa bercanda selama 30 detik.",
+            "Sebutkan tiga hal yang ingin kamu lakukan bersama di masa depan.",
+            "Ucapkan sesuatu yang selama ini ingin kamu katakan."
+        ]
+    },
+
+    berani: {
+        truth: [
+            "Pernahkah kamu cemburu tetapi memilih diam?",
+            "Apa rahasia kecil yang belum pernah kamu ceritakan?",
+            "Apa hal paling spontan yang ingin kamu lakukan bersamaku?",
+            "Pernahkah kamu berpura-pura tidak marah padahal sebenarnya marah?",
+            "Apa pertanyaan yang paling takut kamu tanyakan kepadaku?"
+        ],
+        dare: [
+            "Biarkan pasangan memilihkan pose foto lucu untukmu.",
+            "Tatap pasangan tanpa tertawa selama 30 detik.",
+            "Katakan satu kalimat rayuan paling berani.",
+            "Peragakan bagaimana kamu saat sedang cemburu.",
+            "Buat pengakuan cinta paling dramatis."
+        ]
+    }
+};
+
+let tdPlayers = [];
+let tdTurn = 0;
+let tdLastIndex = -1;
+let tdCategory = "";
+
+// MULAI TRUTH OR DARE
+function startTruthDare() {
+    tdPlayers = [];
+    tdTurn = 0;
+    tdLastIndex = -1;
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+            <div class="text-6xl mb-4">💬</div>
+            <h2 class="text-2xl font-black">Truth or Dare</h2>
+            <p class="text-sm text-gray-500 mt-2">
+                Masukkan nama kalian untuk memulai permainan.
+            </p>
+
+            <div class="text-left mt-6 space-y-4">
+                <div>
+                    <label class="font-bold text-sm">Pemain Pertama</label>
+                    <input id="tdPlayerOne"
+                        class="w-full mt-2 p-4 rounded-2xl bg-pink-50 border"
+                        placeholder="Nama pemain pertama">
+                </div>
+
+                <div>
+                    <label class="font-bold text-sm">Pemain Kedua</label>
+                    <input id="tdPlayerTwo"
+                        class="w-full mt-2 p-4 rounded-2xl bg-purple-50 border"
+                        placeholder="Nama pemain kedua">
+                </div>
+            </div>
+
+            <button onclick="saveTDPlayers()"
+                class="w-full mt-6 py-4 rounded-full bg-pinkLove text-white font-black">
+                Mulai Bermain 💕
+            </button>
+        </div>
+    `;
+}
+
+// SIMPAN NAMA PEMAIN
+
+function saveTDPlayers() {
+    const one = document.getElementById('tdPlayerOne').value.trim();
+    const two = document.getElementById('tdPlayerTwo').value.trim();
+
+    if (!one || !two) {
+        alert('Isi nama kedua pemain terlebih dahulu!');
+        return;
+    }
+
+    if (one.toLowerCase() === two.toLowerCase()) {
+        alert('Gunakan nama yang berbeda!');
+        return;
+    }
+
+    tdPlayers = [one, two];
+    tdTurn = 0;
+    tdLastIndex = -1;
+    tdCategory = "";
+
+    renderTDCategory();
+}
+function renderTDCategory() {
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+            <h3 class="text-xl font-bold mb-2">
+                Pilih Kategori 💕
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-6">
+                Pilih suasana permainan kalian.
+            </p>
+
+            <div class="grid grid-cols-2 gap-3">
+
+                <button onclick="selectTDCategory('romantis')"
+                    class="p-5 rounded-2xl bg-pink-100 hover:bg-pink-200 transition">
+                    <div class="text-3xl mb-2">💕</div>
+                    <div class="font-bold text-pink-700">Romantis</div>
+                    <div class="text-xs text-gray-500 mt-1">Seputar cinta</div>
+                </button>
+
+                <button onclick="selectTDCategory('lucu')"
+                    class="p-5 rounded-2xl bg-yellow-100 hover:bg-yellow-200 transition">
+                    <div class="text-3xl mb-2">😂</div>
+                    <div class="font-bold text-yellow-700">Lucu</div>
+                    <div class="text-xs text-gray-500 mt-1">Bikin tertawa</div>
+                </button>
+
+                <button onclick="selectTDCategory('mendalam')"
+                    class="p-5 rounded-2xl bg-purple-100 hover:bg-purple-200 transition">
+                    <div class="text-3xl mb-2">💗</div>
+                    <div class="font-bold text-purple-700">Mendalam</div>
+                    <div class="text-xs text-gray-500 mt-1">Kenali perasaan</div>
+                </button>
+
+                <button onclick="selectTDCategory('berani')"
+                    class="p-5 rounded-2xl bg-red-100 hover:bg-red-200 transition">
+                    <div class="text-3xl mb-2">🔥</div>
+                    <div class="font-bold text-red-700">Tantangan Berani</div>
+                    <div class="text-xs text-gray-500 mt-1">Lebih menantang</div>
+                </button>
+
+            </div>
+        </div>
+    `;
+}
+
+function selectTDCategory(category) {
+    tdCategory = category;
+    tdTurn = 0;
+    tdLastIndex = -1;
+
+    renderTDMode();
+}
+
+
+// PILIH TRUTH ATAU DARE
+function renderTDMode() {
+    const player = tdPlayers[tdTurn];
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-sm text-purple-500 mb-2">
+                Kategori: ${tdCategory.toUpperCase()}
+            </div>
+
+            <h3 class="text-xl font-bold mb-2">
+                Giliran ${escapeHTML(player)} 💕
+            </h3>
+
+            <p class="text-gray-500 text-sm mb-6">
+                Pilih Truth atau Dare!
+            </p>
+
+            <div class="grid grid-cols-2 gap-4">
+
+                <button onclick="selectTDType('truth')"
+                    class="rounded-2xl bg-purple-100 p-6 hover:bg-purple-200 transition">
+                    <div class="text-4xl mb-2">🤫</div>
+                    <div class="font-bold text-purple-700">TRUTH</div>
+                    <div class="text-xs text-gray-500">Jujur menjawab</div>
+                </button>
+
+                <button onclick="selectTDType('dare')"
+                    class="rounded-2xl bg-pink-100 p-6 hover:bg-pink-200 transition">
+                    <div class="text-4xl mb-2">🔥</div>
+                    <div class="font-bold text-pink-700">DARE</div>
+                    <div class="text-xs text-gray-500">Berani melakukan</div>
+                </button>
+
+            </div>
+
+            <button onclick="renderTDCategory()"
+                class="mt-5 text-sm text-gray-500 underline">
+                Ganti Kategori
+            </button>
+
+        </div>
+    `;
+}
+
+// TAMPILKAN TANTANGAN
+function selectTDType(type) {
+    const questions = truthDareData[tdCategory][type];
+
+    let randomIndex;
+
+    do {
+        randomIndex = Math.floor(Math.random() * questions.length);
+    } while (
+        questions.length > 1 &&
+        randomIndex === tdLastIndex
+    );
+
+    tdLastIndex = randomIndex;
+
+    const question = questions[randomIndex];
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-4xl mb-4">
+                ${type === 'truth' ? '🤫' : '🔥'}
+            </div>
+
+            <div class="text-sm text-purple-500 mb-2">
+                ${tdCategory.toUpperCase()} • ${type.toUpperCase()}
+            </div>
+
+            <h3 class="text-xl font-bold mb-5">
+                ${escapeHTML(tdPlayers[tdTurn])}
+            </h3>
+
+            <div class="bg-pink-50 rounded-2xl p-6 mb-6">
+                <p class="text-lg font-medium text-gray-700">
+                    ${escapeHTML(question)}
+                </p>
+            </div>
+
+            <button onclick="nextTDTurn()"
+                class="w-full rounded-xl bg-purple-600 text-white py-3 font-bold hover:bg-purple-700 transition">
+                Giliran Berikutnya 💕
+            </button>
+
+        </div>
+    `;
+}
+// GANTI GILIRAN
+function nextTDTurn() {
+    tdTurn = 1 - tdTurn;
+    renderTDMode();
+}
+
+
+
+const thisOrThatQuestions = [
+    {
+        a: "Chat setiap hari",
+        b: "Telepon setiap malam"
+    },
+    {
+        a: "Pelukan lama",
+        b: "Ciuman manis"
+    },
+    {
+        a: "Dinner romantis",
+        b: "Jalan-jalan berdua"
+    },
+    {
+        a: "Pantai",
+        b: "Pegunungan"
+    },
+    {
+        a: "Nonton film di rumah",
+        b: "Nonton di bioskop"
+    },
+    {
+        a: "Pasangan humoris",
+        b: "Pasangan romantis"
+    },
+    {
+        a: "Hadiah mahal",
+        b: "Hadiah buatan sendiri"
+    },
+    {
+        a: "Liburan bersama",
+        b: "Staycation berdua"
+    },
+    {
+        a: "Dipeluk saat sedih",
+        b: "Diberi kata-kata semangat"
+    },
+    {
+        a: "Kencan spontan",
+        b: "Kencan terencana"
+    },
+    {
+        a: "Masa depan sederhana",
+        b: "Masa depan penuh petualangan"
+    },
+    {
+        a: "Masak bersama",
+        b: "Makan di restoran"
+    },
+    {
+        a: "Chat panjang",
+        b: "Voice note romantis"
+    },
+    {
+        a: "Tidur sambil telepon",
+        b: "Telepon sampai tertawa"
+    },
+    {
+        a: "Selalu bersama",
+        b: "Saling memberi ruang"
+    }
+];
+
+let totPlayers = [];
+let totAnswers = [[], []];
+let totQuestionIndex = 0;
+let totTurn = 0;
+
+function startThisOrThat() {
+    totPlayers = [];
+    totAnswers = [[], []];
+    totQuestionIndex = 0;
+    totTurn = 0;
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+            <div class="text-5xl mb-4">💗</div>
+
+            <h3 class="text-xl font-bold mb-2">
+                This or That
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-6">
+                Isi nama kalian untuk memulai permainan.
+            </p>
+
+            <div class="space-y-3 text-left">
+                <div>
+                    <label class="text-sm font-medium">Nama Pemain 1</label>
+                    <input id="totPlayerOne"
+                        type="text"
+                        placeholder="Nama kamu..."
+                        class="w-full border rounded-xl p-3 mt-1 outline-none focus:ring-2 focus:ring-pink-300">
+                </div>
+
+                <div>
+                    <label class="text-sm font-medium">Nama Pemain 2</label>
+                    <input id="totPlayerTwo"
+                        type="text"
+                        placeholder="Nama pasangan..."
+                        class="w-full border rounded-xl p-3 mt-1 outline-none focus:ring-2 focus:ring-pink-300">
+                </div>
+            </div>
+
+            <button onclick="saveTOTPlayers()"
+                class="w-full mt-6 rounded-xl bg-purple-600 text-white py-3 font-bold hover:bg-purple-700 transition">
+                Mulai Bermain 💕
+            </button>
+        </div>
+    `;
+}
+
+function saveTOTPlayers() {
+    const one = document.getElementById('totPlayerOne').value.trim();
+    const two = document.getElementById('totPlayerTwo').value.trim();
+
+    if (!one || !two) {
+        alert('Isi nama kedua pemain terlebih dahulu!');
+        return;
+    }
+
+    if (one.toLowerCase() === two.toLowerCase()) {
+        alert('Gunakan nama yang berbeda!');
+        return;
+    }
+
+    totPlayers = [one, two];
+    totAnswers = [[], []];
+    totQuestionIndex = 0;
+    totTurn = 0;
+
+    renderTOTQuestion();
+}
+
+function renderTOTQuestion() {
+    const question = thisOrThatQuestions[totQuestionIndex];
+    const player = totPlayers[totTurn];
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="flex justify-between items-center mb-5">
+                <span class="text-xs text-purple-500 font-semibold">
+                    PERTANYAAN ${totQuestionIndex + 1}/${thisOrThatQuestions.length}
+                </span>
+
+                <span class="text-xs text-pink-500 font-semibold">
+                    PEMAIN ${totTurn + 1}
+                </span>
+            </div>
+
+            <div class="bg-pink-50 rounded-2xl p-4 mb-5">
+                <div class="text-3xl mb-2">💞</div>
+
+                <h3 class="text-lg font-bold">
+                    Giliran ${escapeHTML(player)}
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Pilih salah satu yang paling kamu sukai!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+
+                <button onclick="chooseTOTAnswer(0)"
+                    class="min-h-36 rounded-2xl border-2 border-pink-200 bg-pink-50 p-4 hover:bg-pink-100 hover:border-pink-400 transition">
+                    <div class="text-3xl mb-3">💗</div>
+                    <div class="font-bold text-gray-700">
+                        ${escapeHTML(question.a)}
+                    </div>
+                </button>
+
+                <button onclick="chooseTOTAnswer(1)"
+                    class="min-h-36 rounded-2xl border-2 border-purple-200 bg-purple-50 p-4 hover:bg-purple-100 hover:border-purple-400 transition">
+                    <div class="text-3xl mb-3">💜</div>
+                    <div class="font-bold text-gray-700">
+                        ${escapeHTML(question.b)}
+                    </div>
+                </button>
+
+            </div>
+
+            <p class="text-xs text-gray-400 mt-5">
+                Pilihanmu akan dibandingkan dengan pasanganmu.
+            </p>
+        </div>
+    `;
+}
+
+function chooseTOTAnswer(answer) {
+    totAnswers[totTurn][totQuestionIndex] = answer;
+
+    if (totTurn === 0) {
+        totTurn = 1;
+
+        document.getElementById('gameContent').innerHTML = `
+            <div class="text-center py-8">
+                <div class="text-6xl mb-4">🙈</div>
+
+                <h3 class="text-xl font-bold mb-2">
+                    Giliran ${escapeHTML(totPlayers[1])}!
+                </h3>
+
+                <p class="text-sm text-gray-500 mb-6">
+                    Jangan intip pilihan pasanganmu ya!
+                </p>
+
+                <button onclick="renderTOTQuestion()"
+                    class="w-full rounded-xl bg-purple-600 text-white py-3 font-bold">
+                    Saya Siap 💕
+                </button>
+            </div>
+        `;
+
+    } else {
+        totTurn = 0;
+        totQuestionIndex++;
+
+        if (totQuestionIndex >= thisOrThatQuestions.length) {
+            renderTOTResult();
+        } else {
+            document.getElementById('gameContent').innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-6xl mb-4">💑</div>
+
+                    <h3 class="text-xl font-bold mb-2">
+                        Jawaban tersimpan!
+                    </h3>
+
+                    <p class="text-sm text-gray-500 mb-6">
+                        Bersiap untuk pertanyaan berikutnya.
+                    </p>
+
+                    <button onclick="renderTOTQuestion()"
+                        class="w-full rounded-xl bg-pink-500 text-white py-3 font-bold">
+                        Lanjutkan 💗
+                    </button>
+                </div>
+            `;
+        }
+    }
+}
+
+function renderTOTResult() {
+    let sameAnswers = 0;
+
+    for (let i = 0; i < thisOrThatQuestions.length; i++) {
+        if (totAnswers[0][i] === totAnswers[1][i]) {
+            sameAnswers++;
+        }
+    }
+
+    const percentage = Math.round(
+        (sameAnswers / thisOrThatQuestions.length) * 100
+    );
+
+    let message = "";
+
+    if (percentage >= 80) {
+        message = "Wah, kalian punya banyak kesamaan! 💕";
+    } else if (percentage >= 60) {
+        message = "Selera kalian cukup sejalan! 💗";
+    } else if (percentage >= 40) {
+        message = "Berbeda pilihan, tetapi tetap saling melengkapi! 💜";
+    } else {
+        message = "Wah, kalian punya banyak hal untuk saling dikenali! 🥰";
+    }
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-6xl mb-4">💑</div>
+
+            <h3 class="text-2xl font-bold mb-2">
+                Hasil This or That!
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-5">
+                ${escapeHTML(totPlayers[0])} & ${escapeHTML(totPlayers[1])}
+            </p>
+
+            <div class="bg-gradient-to-br from-pink-100 to-purple-100 rounded-3xl p-6 mb-5">
+
+                <div class="text-sm text-purple-600 font-semibold mb-2">
+                    TINGKAT KECOCOKAN
+                </div>
+
+                <div class="text-5xl font-extrabold text-purple-700">
+                    ${percentage}%
+                </div>
+
+                <p class="text-sm text-gray-600 mt-3">
+                    ${sameAnswers} dari ${thisOrThatQuestions.length} jawaban kalian sama.
+                </p>
+
+            </div>
+
+            <p class="font-semibold text-gray-700 mb-6">
+                ${message}
+            </p>
+
+            <div class="space-y-3">
+                <button onclick="startThisOrThat()"
+                    class="w-full rounded-xl bg-purple-600 text-white py-3 font-bold">
+                    Main Lagi 💕
+                </button>
+
+                <button onclick="openGame('this-or-that')"
+                    class="w-full rounded-xl border border-purple-200 py-3 font-semibold text-purple-600">
+                    Ulangi Permainan
+                </button>
+            </div>
+
+        </div>
+    `;
+}
+
+
+function showComingSoon(gameName) {
+    const notification = document.createElement('div');
+
+    notification.className = `
+        fixed top-6 left-1/2 -translate-x-1/2
+        z-[9999] w-[90%] max-w-sm
+        bg-white rounded-2xl shadow-2xl
+        p-5 text-center
+        border border-pink-100
+    `;
+
+    notification.innerHTML = `
+        <div class="text-4xl mb-3">🎮</div>
+
+        <h3 class="text-lg font-bold text-purple-700 mb-2">
+            Coming Soon!
+        </h3>
+
+        <p class="text-sm text-gray-500 mb-3">
+            Game <b>${escapeHTML(gameName)}</b> sedang dalam proses pengembangan.
+        </p>
+
+        <p class="text-xs text-pink-500 mb-4">
+            Nantikan keseruannya di Couple Play! 💕
+        </p>
+
+        <button onclick="this.parentElement.remove()"
+            class="bg-purple-600 text-white px-6 py-2 rounded-xl text-sm font-semibold">
+            Mengerti 💗
+        </button>
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.remove();
+    }, 5000);
+}
+
+
+
+function startLoveCalculator() {
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-6xl mb-3">💘</div>
+
+            <h3 class="text-2xl font-bold text-purple-700 mb-2">
+                Love Calculator
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-6">
+                Seberapa cocok kalian berdua?
+                Yuk, hitung kecocokan cinta kalian!
+            </p>
+
+            <div class="space-y-4 text-left">
+
+                <div>
+                    <label class="text-sm font-semibold text-gray-600">
+                        Nama Kamu
+                    </label>
+
+                    <input
+                        type="text"
+                        id="loveNameOne"
+                        placeholder="Masukkan nama kamu..."
+                        class="w-full border border-pink-200 rounded-xl p-3 mt-2 outline-none focus:ring-2 focus:ring-pink-300"
+                    >
+                </div>
+
+                <div class="text-center text-3xl">
+                    ❤️
+                </div>
+
+                <div>
+                    <label class="text-sm font-semibold text-gray-600">
+                        Nama Pasangan
+                    </label>
+
+                    <input
+                        type="text"
+                        id="loveNameTwo"
+                        placeholder="Masukkan nama pasangan..."
+                        class="w-full border border-pink-200 rounded-xl p-3 mt-2 outline-none focus:ring-2 focus:ring-pink-300"
+                    >
+                </div>
+
+            </div>
+
+            <button
+                onclick="calculateLove()"
+                class="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition">
+                Hitung Kecocokan 💕
+            </button>
+
+            <p class="text-xs text-gray-400 mt-4">
+                Siap mengetahui hasil kecocokan kalian? 🥰
+            </p>
+
+        </div>
+    `;
+}
+
+function calculateLove() {
+    const nameOne = document.getElementById('loveNameOne').value.trim();
+    const nameTwo = document.getElementById('loveNameTwo').value.trim();
+
+    if (!nameOne || !nameTwo) {
+        alert('Masukkan kedua nama terlebih dahulu!');
+        return;
+    }
+
+    if (nameOne.toLowerCase() === nameTwo.toLowerCase()) {
+        alert('Masukkan dua nama yang berbeda!');
+        return;
+    }
+
+    // Membuat hasil yang konsisten berdasarkan kedua nama
+    const names = [nameOne.toLowerCase(), nameTwo.toLowerCase()]
+        .sort();
+
+    const combinedNames = names.join('');
+
+    let hash = 0;
+
+    for (let i = 0; i < combinedNames.length; i++) {
+        hash = (hash * 31 + combinedNames.charCodeAt(i)) % 10000;
+    }
+
+    const percentage = (hash % 100) + 1;
+
+    // Tampilan animasi perhitungan
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center py-10">
+
+            <div class="text-6xl mb-5 animate-pulse">
+                💓
+            </div>
+
+            <h3 class="text-xl font-bold text-purple-700 mb-3">
+                Menghitung Kecocokan...
+            </h3>
+
+            <p class="text-sm text-gray-500">
+                Cupid sedang memeriksa cinta kalian 💘
+            </p>
+
+            <div class="w-full bg-pink-100 rounded-full h-3 mt-6 overflow-hidden">
+                <div id="loveProgress"
+                    class="bg-gradient-to-r from-pink-400 to-purple-500 h-3 rounded-full transition-all duration-1000"
+                    style="width: 0%">
+                </div>
+            </div>
+
+        </div>
+    `;
+
+    setTimeout(() => {
+        const progress = document.getElementById('loveProgress');
+
+        if (progress) {
+            progress.style.width = '100%';
+        }
+    }, 100);
+
+    setTimeout(() => {
+        renderLoveResult(nameOne, nameTwo, percentage);
+    }, 1800);
+}
+
+
+function renderLoveResult(nameOne, nameTwo, percentage) {
+
+    let message;
+    let emoji;
+
+    if (percentage >= 90) {
+        message = "Wah! Kalian pasangan yang sangat serasi. Semoga cinta kalian selalu tumbuh! 💖";
+        emoji = "💞";
+    } else if (percentage >= 75) {
+        message = "Kalian memiliki kecocokan yang luar biasa. Pertahankan hubungan indah ini! 💗";
+        emoji = "🥰";
+    } else if (percentage >= 60) {
+        message = "Ada banyak hal indah yang bisa kalian bangun bersama. Terus saling memahami! 💕";
+        emoji = "💘";
+    } else if (percentage >= 40) {
+        message = "Setiap pasangan punya perbedaan. Jadikan perbedaan itu alasan untuk saling melengkapi! 🌷";
+        emoji = "💜";
+    } else {
+        message = "Angka bukan segalanya. Cinta tumbuh dari perhatian, kepercayaan, dan usaha bersama! ❤️";
+        emoji = "🌹";
+    }
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-5xl mb-3">${emoji}</div>
+
+            <h3 class="text-2xl font-bold text-purple-700 mb-2">
+                Hasil Kecocokan Cinta
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-5">
+                ${escapeHTML(nameOne)} ❤️ ${escapeHTML(nameTwo)}
+            </p>
+
+            <div class="bg-gradient-to-br from-pink-100 to-purple-100 rounded-3xl p-6 mb-5">
+
+                <div class="text-6xl mb-3">💑</div>
+
+                <div class="text-sm font-semibold text-purple-600">
+                    LOVE COMPATIBILITY
+                </div>
+
+                <div class="text-6xl font-extrabold text-purple-700 my-3">
+                    ${percentage}%
+                </div>
+
+                <div class="w-full bg-white rounded-full h-3 overflow-hidden">
+                    <div
+                        class="bg-gradient-to-r from-pink-400 to-purple-500 h-3 rounded-full"
+                        style="width: ${percentage}%">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-pink-50 rounded-2xl p-4 mb-6">
+                <p class="font-semibold text-purple-700 mb-2">
+                    Pesan dari Cupid 💌
+                </p>
+
+                <p class="text-sm text-gray-600">
+                    ${message}
+                </p>
+            </div>
+
+            <button
+                onclick="startLoveCalculator()"
+                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition">
+                Hitung Lagi 💕
+            </button>
+
+        </div>
+
+        <p class="text-xs text-gray-400 text-center mt-4">
+            Hanya permainan hiburan. Kecocokan cinta sebenarnya tidak ditentukan oleh angka. ❤️
+        </p>
+    `;
+}
+
+
+const randomLoveMessages = {
+    romantis: [
+        "Aku tidak butuh dunia yang sempurna, cukup ada kamu di dalamnya. ❤️",
+        "Jika aku harus memilih lagi, aku tetap akan memilih kamu.",
+        "Kamu adalah bagian terbaik dari hari-hariku.",
+        "Aku ingin menjadi alasan di balik senyummu setiap hari.",
+        "Rumah bukan selalu tentang tempat, terkadang rumah adalah seseorang. Dan bagiku, itu kamu."
+    ],
+
+    manis: [
+        "Jangan lupa bahagia hari ini, karena senyummu adalah favoritku.",
+        "Terima kasih sudah hadir dan membuat hidupku lebih berwarna.",
+        "Hal sederhana menjadi istimewa ketika dilakukan bersamamu.",
+        "Aku suka caramu membuat hari biasa terasa luar biasa.",
+        "Semoga hari ini kamu tahu betapa berharganya dirimu bagiku."
+    ],
+
+    lucu: [
+        "Kamu itu seperti WiFi, kalau jauh darimu hidupku terasa kehilangan koneksi. 😂",
+        "Aku bukan fotografer, tapi aku bisa membayangkan masa depan bersamamu.",
+        "Kamu tahu kenapa aku suka matematika? Karena aku ingin menghitung hari bersamamu.",
+        "Kalau kamu adalah tugas, aku tidak akan pernah mengumpulkanmu terlambat.",
+        "Kamu itu seperti charger, tanpamu energiku cepat habis."
+    ],
+
+    kangen: [
+        "Jarak boleh memisahkan kita, tetapi tidak dengan pikiranku yang selalu tentangmu.",
+        "Ada banyak hal yang ingin kuceritakan, tetapi semuanya terasa lebih indah jika kamu ada di sini.",
+        "Aku sedang merindukan seseorang. Tebak siapa? Ya, kamu.",
+        "Semoga waktu cepat mempertemukan kita kembali.",
+        "Kalau rindu bisa dikirim lewat pesan, mungkin ponselmu sudah penuh dariku."
+    ]
+};
+
+let lastRandomLoveMessage = "";
+
+
+
+
+function startRandomLove() {
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-6xl mb-3">💌</div>
+
+            <h3 class="text-2xl font-bold text-purple-700 mb-2">
+                Random Love
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-6">
+                Dapatkan pesan cinta spesial untuk seseorang yang kamu sayangi.
+            </p>
+
+            <div class="grid grid-cols-2 gap-3">
+
+                <button onclick="generateRandomLove('romantis')"
+                    class="bg-pink-100 rounded-2xl p-5 hover:bg-pink-200 transition">
+                    <div class="text-3xl mb-2">❤️</div>
+                    <div class="font-bold text-pink-700">Romantis</div>
+                </button>
+
+                <button onclick="generateRandomLove('manis')"
+                    class="bg-purple-100 rounded-2xl p-5 hover:bg-purple-200 transition">
+                    <div class="text-3xl mb-2">🌷</div>
+                    <div class="font-bold text-purple-700">Manis</div>
+                </button>
+
+                <button onclick="generateRandomLove('lucu')"
+                    class="bg-yellow-100 rounded-2xl p-5 hover:bg-yellow-200 transition">
+                    <div class="text-3xl mb-2">😂</div>
+                    <div class="font-bold text-yellow-700">Lucu</div>
+                </button>
+
+                <button onclick="generateRandomLove('kangen')"
+                    class="bg-red-100 rounded-2xl p-5 hover:bg-red-200 transition">
+                    <div class="text-3xl mb-2">🥺</div>
+                    <div class="font-bold text-red-700">Kangen</div>
+                </button>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function generateRandomLove(category) {
+    const messages = randomLoveMessages[category];
+
+    let randomIndex;
+    let message;
+
+    do {
+        randomIndex = Math.floor(Math.random() * messages.length);
+        message = messages[randomIndex];
+    } while (messages.length > 1 && message === lastRandomLoveMessage);
+
+    lastRandomLoveMessage = message;
+
+    const categoryNames = {
+        romantis: "Romantis ❤️",
+        manis: "Manis 🌷",
+        lucu: "Lucu 😂",
+        kangen: "Kangen 🥺"
+    };
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-6xl mb-3 animate-pulse">
+                💌
+            </div>
+
+            <h3 class="text-xl font-bold text-purple-700 mb-2">
+                ${categoryNames[category]}
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-5">
+                Pesan spesial untukmu
+            </p>
+
+            <div class="bg-gradient-to-br from-pink-100 to-purple-100 rounded-3xl p-6 mb-6">
+
+                <div class="text-3xl mb-4">💕</div>
+
+                <p id="randomLoveText"
+                    class="text-lg font-semibold text-purple-800 leading-relaxed">
+                    ${escapeHTML(message)}
+                </p>
+
+                <div class="text-3xl mt-4">🌷</div>
+
+            </div>
+
+            <div class="space-y-3">
+
+                <button onclick="generateRandomLove('${category}')"
+                    class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition">
+                    Pesan Lain 💗
+                </button>
+
+                <button onclick="copyRandomLove()"
+                    class="w-full border-2 border-pink-200 text-pink-600 font-bold py-3 rounded-xl hover:bg-pink-50 transition">
+                    Salin Pesan 📋
+                </button>
+
+                <button onclick="startRandomLove()"
+                    class="text-sm text-gray-500 underline mt-2">
+                    Kembali ke Kategori
+                </button>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+function copyRandomLove() {
+    if (!lastRandomLoveMessage) return;
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(lastRandomLoveMessage)
+            .then(() => alert('Pesan cinta berhasil disalin! 💕'))
+            .catch(() => alert('Gagal menyalin pesan.'));
+    } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = lastRandomLoveMessage;
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        try {
+            document.execCommand('copy');
+            alert('Pesan cinta berhasil disalin! 💕');
+        } catch (error) {
+            alert('Gagal menyalin pesan.');
+        }
+
+        textarea.remove();
+    }
+}
+
+const dareChallengeData = {
+    easy: [
+        "Berikan pujian paling manis kepada pasanganmu.",
+        "Sebutkan tiga hal yang kamu sukai dari pasanganmu.",
+        "Kirim emoji cinta sebanyak 10 kali.",
+        "Buat ekspresi wajah paling lucu.",
+        "Nyanyikan satu bait lagu favorit pasanganmu.",
+        "Ucapkan selamat malam dengan cara paling romantis.",
+        "Tirukan gaya tertawa pasanganmu.",
+        "Sebutkan satu kenangan lucu bersama pasangan."
+    ],
+
+    medium: [
+        "Tatap mata pasangan selama 30 detik tanpa tertawa.",
+        "Nyanyikan lagu romantis untuk pasanganmu.",
+        "Ceritakan alasan pertama kamu jatuh cinta.",
+        "Buat rayuan paling gombal dalam 15 detik.",
+        "Peragakan bagaimana kamu saat sedang merindukan pasangan.",
+        "Buat puisi cinta spontan untuk pasangan.",
+        "Berikan pelukan selama 20 detik jika sama-sama nyaman.",
+        "Sebutkan lima alasan mengapa pasanganmu istimewa."
+    ],
+
+    hard: [
+        "Ungkapkan perasaan terdalam yang belum pernah kamu sampaikan.",
+        "Buat pidato cinta selama satu menit tanpa berhenti.",
+        "Ceritakan impian terbesar yang ingin kamu wujudkan bersama pasangan.",
+        "Tatap mata pasangan dan ucapkan tiga janji yang ingin kamu jaga.",
+        "Buat kejutan romantis sederhana untuk pasangan sekarang.",
+        "Ceritakan momen ketika kamu paling takut kehilangan pasangan.",
+        "Sebutkan sepuluh hal kecil yang membuatmu jatuh cinta.",
+        "Buat deklarasi cinta paling dramatis selama 30 detik."
+    ]
+};
+
+let darePlayers = [];
+let dareTurn = 0;
+let dareDifficulty = 'easy';
+let dareCurrentChallenge = '';
+let dareUsedChallenges = [];
+let dareScores = [0, 0];
+
+function startDareChallenge() {
+    darePlayers = [];
+    dareTurn = 0;
+    dareDifficulty = 'easy';
+    dareCurrentChallenge = '';
+    dareUsedChallenges = [];
+    dareScores = [0, 0];
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-6xl mb-3">🔥</div>
+
+            <h3 class="text-2xl font-bold text-purple-700 mb-2">
+                Dare Challenge
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-6">
+                Berani menerima tantangan dari pasanganmu?
+            </p>
+
+            <div class="space-y-4 text-left">
+
+                <div>
+                    <label class="text-sm font-semibold text-gray-600">
+                        Nama Pemain 1
+                    </label>
+
+                    <input
+                        id="darePlayerOne"
+                        type="text"
+                        placeholder="Nama kamu..."
+                        class="w-full border border-pink-200 rounded-xl p-3 mt-2 outline-none focus:ring-2 focus:ring-pink-300">
+                </div>
+
+                <div>
+                    <label class="text-sm font-semibold text-gray-600">
+                        Nama Pemain 2
+                    </label>
+
+                    <input
+                        id="darePlayerTwo"
+                        type="text"
+                        placeholder="Nama pasangan..."
+                        class="w-full border border-pink-200 rounded-xl p-3 mt-2 outline-none focus:ring-2 focus:ring-pink-300">
+                </div>
+
+            </div>
+
+            <button
+                onclick="saveDarePlayers()"
+                class="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition">
+                Mulai Bermain 🔥
+            </button>
+
+        </div>
+    `;
+}
+
+function saveDarePlayers() {
+    const one = document.getElementById('darePlayerOne').value.trim();
+    const two = document.getElementById('darePlayerTwo').value.trim();
+
+    if (!one || !two) {
+        alert('Isi nama kedua pemain terlebih dahulu!');
+        return;
+    }
+
+    if (one.toLowerCase() === two.toLowerCase()) {
+        alert('Gunakan nama yang berbeda!');
+        return;
+    }
+
+    darePlayers = [one, two];
+    dareTurn = 0;
+    dareScores = [0, 0];
+    dareUsedChallenges = [];
+
+    renderDareDifficulty();
+}
+
+function renderDareDifficulty() {
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-5xl mb-3">🎯</div>
+
+            <h3 class="text-xl font-bold text-purple-700 mb-2">
+                Pilih Tingkat Tantangan
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-6">
+                Tentukan seberapa berani kalian!
+            </p>
+
+            <div class="space-y-3">
+
+                <button onclick="selectDareDifficulty('easy')"
+                    class="w-full bg-green-50 border-2 border-green-200 rounded-2xl p-4 text-left hover:bg-green-100 transition">
+                    <div class="font-bold text-green-700">🌱 Easy</div>
+                    <div class="text-xs text-gray-500 mt-1">
+                        Tantangan ringan dan menyenangkan.
+                    </div>
+                </button>
+
+                <button onclick="selectDareDifficulty('medium')"
+                    class="w-full bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-4 text-left hover:bg-yellow-100 transition">
+                    <div class="font-bold text-yellow-700">⚡ Medium</div>
+                    <div class="text-xs text-gray-500 mt-1">
+                        Tantangan lebih seru dan romantis.
+                    </div>
+                </button>
+
+                <button onclick="selectDareDifficulty('hard')"
+                    class="w-full bg-red-50 border-2 border-red-200 rounded-2xl p-4 text-left hover:bg-red-100 transition">
+                    <div class="font-bold text-red-700">🔥 Hard</div>
+                    <div class="text-xs text-gray-500 mt-1">
+                        Tantangan penuh keberanian.
+                    </div>
+                </button>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function selectDareDifficulty(level) {
+    dareDifficulty = level;
+    dareUsedChallenges = [];
+
+    renderDareChallenge();
+}
+
+function renderDareChallenge() {
+    const challenges = dareChallengeData[dareDifficulty];
+
+    const availableChallenges = challenges
+        .map((challenge, index) => ({
+            challenge,
+            index
+        }))
+        .filter(item => !dareUsedChallenges.includes(item.index));
+
+    if (availableChallenges.length === 0) {
+        renderDareResult();
+        return;
+    }
+
+    const randomItem = availableChallenges[
+        Math.floor(Math.random() * availableChallenges.length)
+    ];
+
+    dareCurrentChallenge = randomItem.challenge;
+    dareUsedChallenges.push(randomItem.index);
+
+    const player = darePlayers[dareTurn];
+
+    const difficultyNames = {
+        easy: '🌱 EASY',
+        medium: '⚡ MEDIUM',
+        hard: '🔥 HARD'
+    };
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="flex justify-between items-center mb-5">
+                <span class="text-xs font-bold text-purple-500">
+                    ${difficultyNames[dareDifficulty]}
+                </span>
+
+                <span class="text-xs text-pink-500 font-semibold">
+                    PEMAIN ${dareTurn + 1}
+                </span>
+            </div>
+
+            <div class="bg-pink-50 rounded-2xl p-4 mb-5">
+
+                <div class="text-4xl mb-2">🔥</div>
+
+                <h3 class="text-xl font-bold text-purple-700">
+                    Giliran ${escapeHTML(player)}
+                </h3>
+
+                <p class="text-xs text-gray-500 mt-1">
+                    Tantangan untukmu!
+                </p>
+
+            </div>
+
+            <div class="bg-gradient-to-br from-pink-100 to-purple-100 rounded-3xl p-7 mb-5">
+
+                <div class="text-4xl mb-4">🎯</div>
+
+                <p class="text-lg font-bold text-purple-800 leading-relaxed">
+                    ${escapeHTML(dareCurrentChallenge)}
+                </p>
+
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+
+                <button onclick="completeDareChallenge()"
+                    class="bg-purple-600 text-white font-bold py-3 rounded-xl hover:bg-purple-700 transition">
+                    Berhasil! ⭐
+                </button>
+
+                <button onclick="skipDareChallenge()"
+                    class="border-2 border-pink-200 text-pink-600 font-bold py-3 rounded-xl hover:bg-pink-50 transition">
+                    Lewati
+                </button>
+
+            </div>
+
+            <div class="mt-5 bg-gray-50 rounded-xl p-3">
+                <p class="text-xs text-gray-500">
+                    ⭐ ${escapeHTML(darePlayers[0])}: ${dareScores[0]} poin
+                </p>
+
+                <p class="text-xs text-gray-500 mt-1">
+                    ⭐ ${escapeHTML(darePlayers[1])}: ${dareScores[1]} poin
+                </p>
+            </div>
+
+            <p class="text-xs text-gray-400 mt-4">
+                Tantangan bisa dilewati kapan saja jika tidak nyaman.
+            </p>
+
+        </div>
+    `;
+}
+
+
+function completeDareChallenge() {
+    dareScores[dareTurn]++;
+
+    nextDareTurn();
+}
+
+function skipDareChallenge() {
+    nextDareTurn();
+}
+
+function nextDareTurn() {
+    dareTurn = dareTurn === 0 ? 1 : 0;
+
+    const challenges = dareChallengeData[dareDifficulty];
+
+    if (dareUsedChallenges.length >= challenges.length) {
+        renderDareResult();
+        return;
+    }
+
+    renderDareChallenge();
+}
+
+function renderDareResult() {
+    let winnerMessage;
+
+    if (dareScores[0] > dareScores[1]) {
+        winnerMessage = `🏆 ${escapeHTML(darePlayers[0])} memenangkan tantangan!`;
+    } else if (dareScores[1] > dareScores[0]) {
+        winnerMessage = `🏆 ${escapeHTML(darePlayers[1])} memenangkan tantangan!`;
+    } else {
+        winnerMessage = "💗 Kalian seri! Sama-sama hebat!";
+    }
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+
+            <div class="text-6xl mb-3">🏆</div>
+
+            <h3 class="text-2xl font-bold text-purple-700 mb-2">
+                Challenge Selesai!
+            </h3>
+
+            <p class="text-sm text-gray-500 mb-6">
+                Kalian berhasil menyelesaikan permainan.
+            </p>
+
+            <div class="grid grid-cols-2 gap-3 mb-5">
+
+                <div class="bg-pink-50 rounded-2xl p-4">
+                    <div class="text-3xl mb-2">💗</div>
+
+                    <p class="text-sm font-semibold">
+                        ${escapeHTML(darePlayers[0])}
+                    </p>
+
+                    <p class="text-3xl font-extrabold text-pink-600 mt-2">
+                        ${dareScores[0]}
+                    </p>
+
+                    <p class="text-xs text-gray-500">Poin</p>
+                </div>
+
+                <div class="bg-purple-50 rounded-2xl p-4">
+                    <div class="text-3xl mb-2">💜</div>
+
+                    <p class="text-sm font-semibold">
+                        ${escapeHTML(darePlayers[1])}
+                    </p>
+
+                    <p class="text-3xl font-extrabold text-purple-600 mt-2">
+                        ${dareScores[1]}
+                    </p>
+
+                    <p class="text-xs text-gray-500">Poin</p>
+                </div>
+
+            </div>
+
+            <div class="bg-gradient-to-r from-pink-100 to-purple-100 rounded-2xl p-4 mb-6">
+                <p class="font-bold text-purple-700">
+                    ${winnerMessage}
+                </p>
+            </div>
+
+            <button onclick="startDareChallenge()"
+                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition">
+                Main Lagi 🔥
+            </button>
+
+        </div>
+    `;
+}
+
+
+// =================================
+// COUPLE PLAY - THEME SYSTEM
+// =================================
+
+function applyTheme(theme) {
+
+    const isDark = theme === 'dark';
+
+    document.documentElement.classList.toggle('dark', isDark);
+
+    localStorage.setItem('couplePlayTheme', theme);
+
+    const button = document.getElementById('themeButton');
+
+    if (button) {
+        button.innerText = isDark ? '☀️' : '🌙';
+    }
+}
+
+// GANTI TEMA
+function toggleTheme() {
+
+    const isDark = document.documentElement.classList.contains('dark');
+
+    applyTheme(isDark ? 'light' : 'dark');
+}
+
+// TEMA SAAT WEBSITE DIBUKA
+function initTheme() {
+
+    const savedTheme = localStorage.getItem('couplePlayTheme');
+
+    // Default pertama kali menggunakan Dark Mode
+    applyTheme(savedTheme || 'dark');
+}
+
+initTheme();
+
+
+// =====================================
+// COUPLE PLAY - HEADER IMAGE BACKGROUND
+// =====================================
+
+function handleHeaderImage(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+        alert('Pilih file gambar terlebih dahulu!');
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        const image = new Image();
+
+        image.onload = function() {
+
+            const canvas = document.createElement('canvas');
+
+            const maxWidth = 1600;
+            const scale = Math.min(1, maxWidth / image.width);
+
+            canvas.width = image.width * scale;
+            canvas.height = image.height * scale;
+
+            const ctx = canvas.getContext('2d');
+
+            ctx.drawImage(
+                image,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+            const imageData = canvas.toDataURL('image/jpeg', 0.80);
+
+            localStorage.setItem('couplePlayHeaderImage', imageData);
+
+            applyHeaderImage(imageData);
+        };
+
+        image.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+
+    // Agar gambar yang sama bisa dipilih kembali
+    event.target.value = '';
+}
+
+
+// MENERAPKAN BACKGROUND
+function applyHeaderImage(imageData) {
+
+    const header = document.querySelector('.hero-bg');
+
+    if (!header) return;
+
+    header.style.backgroundImage =
+        `linear-gradient(rgba(25, 12, 35, 0.30), rgba(25, 12, 35, 0.30)), url("${imageData}")`;
+}
+
+
+// MEMUAT BACKGROUND TERSIMPAN
+function loadHeaderImage() {
+
+    const savedImage = localStorage.getItem('couplePlayHeaderImage');
+
+    if (savedImage) {
+        applyHeaderImage(savedImage);
+    }
+}
+
+loadHeaderImage();
+
+// ===================================
+// GAME 1: SAME TIME, SAME CHOICE
+// ===================================
+
+const sameTimeQuestions = [
+    {
+        question: "Kalau liburan bersama, kalian pilih mana?",
+        a: "Pantai 🏖️",
+        b: "Pegunungan 🏔️"
+    },
+    {
+        question: "Mana yang lebih kalian sukai?",
+        a: "Video Call 📱",
+        b: "Voice Call 🎧"
+    },
+    {
+        question: "Kalau bertemu, mau melakukan apa?",
+        a: "Makan bersama 🍜",
+        b: "Jalan-jalan 🚗"
+    },
+    {
+        question: "Pilih suasana kencan!",
+        a: "Sunset 🌅",
+        b: "Malam berbintang 🌙"
+    },
+    {
+        question: "Hadiah mana yang lebih menarik?",
+        a: "Surat cinta 💌",
+        b: "Hadiah kejutan 🎁"
+    }
+];
+
+let stscIndex = 0;
+let stscPlayer = 1;
+let stscAnswers = [];
+let stscScore = 0;
+
+function startSameTimeSameChoice() {
+    stscIndex = 0;
+    stscPlayer = 1;
+    stscAnswers = [];
+    stscScore = 0;
+
+    showSTSCQuestion();
+}
+
+function showSTSCQuestion() {
+    const q = sameTimeQuestions[stscIndex];
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+            <div class="text-5xl mb-3">💞</div>
+            <h2 class="text-2xl font-black text-purple-700">
+                Same Time, Same Choice
+            </h2>
+
+            <p class="text-sm text-gray-500 mt-2">
+                Pertanyaan ${stscIndex + 1} dari ${sameTimeQuestions.length}
+            </p>
+
+            <div class="w-full bg-gray-200 rounded-full h-2 mt-4 mb-6">
+                <div class="bg-pink-400 h-2 rounded-full"
+                     style="width:${((stscIndex + 1) / sameTimeQuestions.length) * 100}%">
+                </div>
+            </div>
+
+            <div class="bg-pink-50 rounded-3xl p-5 mb-5">
+                <p class="text-sm text-pink-500 font-bold mb-2">
+                    SEKARANG GILIRAN PEMAIN ${stscPlayer}
+                </p>
+
+                <h3 class="text-lg font-bold text-gray-800">
+                    ${q.question}
+                </h3>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3">
+                <button onclick="chooseSTSC('a')"
+                    class="p-4 rounded-2xl border-2 border-pink-200 bg-white hover:bg-pink-50 font-bold text-gray-700">
+                    ${q.a}
+                </button>
+
+                <button onclick="chooseSTSC('b')"
+                    class="p-4 rounded-2xl border-2 border-purple-200 bg-white hover:bg-purple-50 font-bold text-gray-700">
+                    ${q.b}
+                </button>
+            </div>
+
+            <p class="text-xs text-gray-400 mt-5">
+                Jangan intip pilihan pasanganmu!
+            </p>
+        </div>
+    `;
+}
+
+function chooseSTSC(answer) {
+    if (stscPlayer === 1) {
+        stscAnswers[stscIndex] = [answer];
+        stscPlayer = 2;
+
+        document.getElementById('gameContent').innerHTML = `
+            <div class="text-center py-8">
+                <div class="text-6xl mb-4">🤫</div>
+                <h2 class="text-2xl font-black text-purple-700">
+                    Pilihan tersimpan!
+                </h2>
+                <p class="text-gray-500 mt-3">
+                    Sekarang berikan perangkat kepada Pemain 2.
+                </p>
+                <button onclick="showSTSCQuestion()"
+                    class="mt-6 bg-pink-500 text-white px-8 py-3 rounded-full font-bold">
+                    Giliran Pemain 2 →
+                </button>
+            </div>
+        `;
+    } else {
+        stscAnswers[stscIndex].push(answer);
+        showSTSCResult();
+    }
+}
+
+function showSTSCResult() {
+    const q = sameTimeQuestions[stscIndex];
+    const answers = stscAnswers[stscIndex];
+
+    const match = answers[0] === answers[1];
+
+    if (match) stscScore++;
+
+    const answer1 = answers[0] === 'a' ? q.a : q.b;
+    const answer2 = answers[1] === 'a' ? q.a : q.b;
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+            <div class="text-6xl mb-4">
+                ${match ? '🥰' : '😂'}
+            </div>
+
+            <h2 class="text-2xl font-black text-purple-700">
+                ${match ? 'Kalian Satu Frekuensi!' : 'Pilihan Berbeda!'}
+            </h2>
+
+            <div class="grid grid-cols-2 gap-3 mt-6">
+                <div class="bg-pink-50 rounded-2xl p-4">
+                    <p class="text-xs text-pink-500 font-bold">PEMAIN 1</p>
+                    <p class="font-bold mt-2">${answer1}</p>
+                </div>
+
+                <div class="bg-purple-50 rounded-2xl p-4">
+                    <p class="text-xs text-purple-500 font-bold">PEMAIN 2</p>
+                    <p class="font-bold mt-2">${answer2}</p>
+                </div>
+            </div>
+
+            <p class="mt-5 text-lg font-bold ${match ? 'text-green-600' : 'text-gray-500'}">
+                ${match ? '+1 Poin 💗' : 'Belum cocok, coba lagi!'}
+            </p>
+
+            <p class="text-sm text-gray-500 mt-2">
+                Skor kecocokan: ${stscScore}/${sameTimeQuestions.length}
+            </p>
+
+            <button onclick="nextSTSC()"
+                class="mt-6 w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-full font-bold">
+                ${stscIndex === sameTimeQuestions.length - 1 ? 'Lihat Hasil ❤️' : 'Pertanyaan Berikutnya →'}
+            </button>
+        </div>
+    `;
+}
+
+function nextSTSC() {
+    stscIndex++;
+
+    if (stscIndex >= sameTimeQuestions.length) {
+        document.getElementById('gameContent').innerHTML = `
+            <div class="text-center py-6">
+                <div class="text-7xl mb-4">💑</div>
+                <h2 class="text-2xl font-black text-purple-700">
+                    Permainan Selesai!
+                </h2>
+
+                <p class="text-gray-500 mt-3">
+                    Kalian mendapatkan ${stscScore} dari ${sameTimeQuestions.length} kecocokan.
+                </p>
+
+                <h3 class="text-4xl font-black text-pink-500 mt-5">
+                    ${Math.round((stscScore / sameTimeQuestions.length) * 100)}%
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-2">
+                    Tingkat kecocokan kalian 💗
+                </p>
+
+                <button onclick="startSameTimeSameChoice()"
+                    class="mt-6 bg-pink-500 text-white px-8 py-3 rounded-full font-bold">
+                    Main Lagi ↻
+                </button>
+            </div>
+        `;
+    } else {
+        stscPlayer = 1;
+        showSTSCQuestion();
+    }
+}
+
+// ===================================
+// GAME 2: MYSTERY CONNECTION
+// ===================================
+
+const mysteryQuestions = [
+    {
+        question: "Aku bisa menghubungkan dua orang meskipun terpisah jarak. Apakah aku?",
+        answer: "komunikasi",
+        hint: "Kita melakukannya lewat pesan atau telepon."
+    },
+    {
+        question: "Aku tidak terlihat, tetapi bisa membuat seseorang merasa dekat meskipun berjauhan. Apakah aku?",
+        answer: "rindu",
+        hint: "Biasanya muncul ketika seseorang tidak ada di dekatmu."
+    },
+    {
+        question: "Aku bisa dikirim melalui layar dan membuat seseorang tersenyum. Apakah aku?",
+        answer: "pesan",
+        hint: "Bisa berupa chat singkat."
+    },
+    {
+        question: "Aku adalah sesuatu yang ingin dilakukan ketika akhirnya bertemu setelah lama berjauhan. Apakah aku?",
+        answer: "pelukan",
+        hint: "Sebuah bentuk kasih sayang."
+    },
+    {
+        question: "Aku membuat dua orang tetap percaya meskipun tidak selalu bersama. Apakah aku?",
+        answer: "kepercayaan",
+        hint: "Sangat penting dalam sebuah hubungan."
+    }
+];
+
+let mysteryIndex = 0;
+let mysteryScore = 0;
+let mysteryOpened = false;
+
+function startMysteryConnection() {
+    mysteryIndex = 0;
+    mysteryScore = 0;
+    mysteryOpened = false;
+
+    showMysteryEnvelope();
+}
+
+function showMysteryEnvelope() {
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center py-5">
+            <div class="text-6xl mb-4">💌</div>
+
+            <h2 class="text-2xl font-black text-purple-700">
+                Mystery Connection
+            </h2>
+
+            <p class="text-sm text-gray-500 mt-2">
+                Pecahkan semua misteri bersama pasanganmu!
+            </p>
+
+            <div class="bg-purple-50 rounded-3xl p-6 mt-6">
+                <p class="text-purple-600 font-bold">
+                    Amplop Misteri ${mysteryIndex + 1}
+                </p>
+
+                <div class="text-8xl my-6">✉️</div>
+
+                <button onclick="openMysteryEnvelope()"
+                    class="bg-purple-600 text-white px-8 py-3 rounded-full font-bold">
+                    Buka Amplop 💜
+                </button>
+            </div>
+
+            <p class="text-xs text-gray-400 mt-5">
+                ${mysteryIndex + 1} dari ${mysteryQuestions.length} misteri
+            </p>
+        </div>
+    `;
+}
+
+function openMysteryEnvelope() {
+    mysteryOpened = true;
+
+    const q = mysteryQuestions[mysteryIndex];
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center">
+            <div class="text-5xl mb-3">🔍</div>
+
+            <h2 class="text-xl font-black text-purple-700">
+                Misteri Terungkap!
+            </h2>
+
+            <div class="bg-purple-50 p-5 rounded-3xl mt-5">
+                <p class="text-xs text-purple-500 font-bold mb-3">
+                    TEKA-TEKI RAHASIA
+                </p>
+
+                <h3 class="font-bold text-gray-800 leading-relaxed">
+                    ${q.question}
+                </h3>
+            </div>
+
+            <input id="mysteryAnswer"
+                type="text"
+                placeholder="Tulis jawaban kalian..."
+                class="w-full border-2 border-purple-200 rounded-2xl p-4 mt-5 text-center outline-none focus:border-purple-500">
+
+            <button onclick="showMysteryHint()"
+                class="text-sm text-purple-500 font-bold mt-4">
+                💡 Minta Petunjuk
+            </button>
+
+            <div id="mysteryHint" class="text-sm text-gray-500 mt-3"></div>
+
+            <button onclick="checkMysteryAnswer()"
+                class="w-full bg-purple-600 text-white py-3 rounded-full font-bold mt-5">
+                Periksa Jawaban ❤️
+            </button>
+        </div>
+    `;
+}
+
+function showMysteryHint() {
+    const q = mysteryQuestions[mysteryIndex];
+
+    document.getElementById('mysteryHint').innerHTML = `
+        💡 Petunjuk: ${q.hint}
+    `;
+}
+
+function checkMysteryAnswer() {
+    const input = document.getElementById('mysteryAnswer');
+
+    const answer = input.value
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, ' ');
+
+    const correctAnswer = mysteryQuestions[mysteryIndex].answer;
+
+    if (!answer) {
+        alert('Masukkan jawaban terlebih dahulu!');
+        return;
+    }
+
+    const correct = answer === correctAnswer;
+
+    if (correct) mysteryScore++;
+
+    document.getElementById('gameContent').innerHTML = `
+        <div class="text-center py-5">
+            <div class="text-6xl mb-4">
+                ${correct ? '🎉' : '🥺'}
+            </div>
+
+            <h2 class="text-2xl font-black ${correct ? 'text-green-600' : 'text-purple-700'}">
+                ${correct ? 'Jawaban Benar!' : 'Belum Tepat!'}
+            </h2>
+
+            <p class="text-gray-500 mt-4">
+                Jawaban yang benar adalah:
+            </p>
+
+            <div class="bg-pink-50 p-4 rounded-2xl mt-3">
+                <h3 class="text-xl font-black text-pink-600">
+                    ${correctAnswer}
+                </h3>
+            </div>
+
+            <p class="text-sm text-gray-500 mt-4">
+                Skor: ${mysteryScore}/${mysteryQuestions.length}
+            </p>
+
+            <button onclick="nextMystery()"
+                class="w-full bg-purple-600 text-white py-3 rounded-full font-bold mt-6">
+                ${mysteryIndex === mysteryQuestions.length - 1 ? 'Lihat Hasil ❤️' : 'Amplop Berikutnya →'}
+            </button>
+        </div>
+    `;
+}
+
+function nextMystery() {
+    mysteryIndex++;
+
+    if (mysteryIndex >= mysteryQuestions.length) {
+        document.getElementById('gameContent').innerHTML = `
+            <div class="text-center py-6">
+                <div class="text-7xl mb-4">💌</div>
+
+                <h2 class="text-2xl font-black text-purple-700">
+                    Semua Misteri Terpecahkan!
+                </h2>
+
+                <p class="text-gray-500 mt-3">
+                    Kalian berhasil menjawab ${mysteryScore} dari ${mysteryQuestions.length} misteri.
+                </p>
+
+                <h3 class="text-4xl font-black text-pink-500 mt-5">
+                    ${Math.round((mysteryScore / mysteryQuestions.length) * 100)}%
+                </h3>
+
+                <button onclick="startMysteryConnection()"
+                    class="mt-6 bg-purple-600 text-white px-8 py-3 rounded-full font-bold">
+                    Main Lagi ↻
+                </button>
+            </div>
+        `;
+    } else {
+        showMysteryEnvelope();
+    }
+}
+
+
+
+// DIALOG ANIMASI LDR
+const ldrDialogues = [
+    "Jarak boleh memisahkan kita...",
+    "Tapi hati kita tetap saling terhubung 💗",
+    "Walaupun tidak bisa bertemu setiap hari...",
+    "Kita tetap punya cara untuk bersenang-senang bersama 🥰",
+    "Karena jauh bukan berarti tidak dekat ❤️"
+];
+
+let ldrDialogueIndex = 0;
+
+setInterval(() => {
+    const dialogue = document.getElementById('ldrDialogue');
+
+    if (!dialogue) return;
+
+    dialogue.style.opacity = "0";
+
+    setTimeout(() => {
+        ldrDialogueIndex =
+            (ldrDialogueIndex + 1) % ldrDialogues.length;
+
+        dialogue.textContent =
+            ldrDialogues[ldrDialogueIndex];
+
+        dialogue.style.opacity = "1";
+    }, 400);
+
+}, 3000);
+
+
+    </script>
+
+</body>
+</html>
